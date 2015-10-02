@@ -9,9 +9,9 @@ use slack::{RtmClient,User};
 use event_handler::SlackBotEventHandler;
 
 pub struct SlackBot {
-    pub name: String,
+    name: String,
     token: String,
-    pub handlers: HashMap<String, Box<CommandHandler>>
+    handlers: HashMap<String, Box<CommandHandler>>
 }
 
 impl SlackBot {
