@@ -1,0 +1,8 @@
+[package]
+name = "slackbot"
+version = "0.1.0"
+authors = ["Matt Jones <mthjones@gmail.com>"]
+
+[dependencies]
+slack = "0.8.1"
+serde_json = "0.6.0"
