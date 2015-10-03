@@ -1,6 +1,6 @@
 [package]
 name = "slackbot"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Matt Jones <mthjones@gmail.com>"]
 description = "Slack bots made easy"
 keywords = ["slack", "bot"]
