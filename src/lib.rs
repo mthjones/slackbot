@@ -65,7 +65,7 @@ impl<'a> ChannelWriter<'a> {
         }
     }
 
-    pub fn message<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
+    pub fn write<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
         self.client.send_message(&self.channel_id[..], &message.into()[..])
     }
 }
