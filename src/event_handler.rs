@@ -3,7 +3,8 @@ use std::collections::HashMap;
 use slack::{EventHandler,RtmClient};
 use serde_json::{self, Value};
 
-use super::{CommandHandler,ChannelWriter,Sender};
+use super::CommandHandler;
+use super::sender::Sender;
 
 struct UserCommand {
     command: String,
@@ -64,11 +65,7 @@ impl<'a> EventHandler for SlackBotEventHandler<'a> {
         if let Some(cmd) = Self::parse_json_to_command(&self.bot_name[..], json_str) {
             let user = cli.get_users().iter().find(|u| u.id == cmd.user_id).unwrap().clone();
             if let Some(handler) = self.handlers.get_mut(&cmd.command[..]) {
-                let writer = ChannelWriter::new(cmd.channel, cli);
-                let mut sender = Sender {
-                    channel_writer: writer,
-                    user: user
-                };
+                let mut sender = Sender::new(cli, cmd.channel, user);
                 handler.handle(&mut sender, &cmd.args);
             }
 

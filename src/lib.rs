@@ -29,12 +29,14 @@
 extern crate slack;
 extern crate serde_json;
 
-mod event_handler;
-
 use std::collections::HashMap;
+use slack::RtmClient;
 
-use slack::{RtmClient, User};
+mod event_handler;
+mod sender;
+
 use event_handler::SlackBotEventHandler;
+pub use sender::Sender;
 
 /// The bot that handles commands and communication with Slack.
 pub struct SlackBot {
@@ -119,33 +121,6 @@ impl SlackBot {
     }
 }
 
-/// The sender of a command to the bot.
-pub struct Sender<'a> {
-    /// A writable Slack channel that the command came from. Can be used to respond on the same
-    /// channel.
-    channel_writer: ChannelWriter<'a>,
-
-    /// The user that sent the command.
-    pub user: User
-}
-
-impl<'a> Sender<'a> {
-    /// Send a message to the channel that the message came from.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// # use slackbot::{SlackBot, Sender};
-    /// # let mut my_bot = SlackBot::new("bot", "YOUR_API_TOKEN");
-    /// # my_bot.on("say-hello", Box::new(|sender: &mut Sender, args: &Vec<String>| {
-    /// sender.respond_in_channel("Hello, world!");
-    /// # }));
-    /// ```
-    pub fn respond_in_channel<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
-        self.channel_writer.write(message)
-    }
-}
-
 /// A trait implemented by types that can handle commands.
 ///
 /// # Examples
@@ -168,23 +143,5 @@ pub trait CommandHandler {
 impl<F> CommandHandler for F where F: FnMut(&mut Sender, &Vec<String>) {
     fn handle(&mut self, sender: &mut Sender, args: &Vec<String>) {
         self(sender, args);
-    }
-}
-
-struct ChannelWriter<'a> {
-    channel_id: String,
-    client: &'a RtmClient
-}
-
-impl<'a> ChannelWriter<'a> {
-    fn new<S: Into<String>>(channel_id: S, client: &'a RtmClient) -> Self {
-        ChannelWriter {
-            channel_id: channel_id.into(),
-            client: client
-        }
-    }
-
-    fn write<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
-        self.client.send_message(&self.channel_id[..], &message.into()[..])
     }
 }
