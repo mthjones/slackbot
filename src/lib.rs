@@ -5,7 +5,7 @@
 //!
 //! Creates a bot that will respond to a message like `!bot echo Hello world!` with `Hello world!`
 //! for any channels it is in.
-//! 
+//!
 //! ```rust,no_run
 //! extern crate slackbot;
 //!
@@ -18,7 +18,7 @@
 //!         if args.len() > 0 {
 //!             sender.respond_in_channel(args.join(" ")).unwrap();
 //!         } else {
-//!             sender.respond_in_channel("echo echo echo");
+//!             sender.respond_in_channel("echo echo echo").unwrap();
 //!         }
 //!     }));
 //!

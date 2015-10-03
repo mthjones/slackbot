@@ -1,8 +1,18 @@
 language: rust
 rust:
-  - stable
-  - beta
-  - nightly
+- stable
+- beta
+- nightly
 matrix:
   allow_failures:
-    - rust: nightly
+  - rust: nightly
+deploy:
+  provider: script
+  script: .travis/upload-docs.sh
+  on:
+    repo: mthjones/slackbot
+    rust: stable
+    branch: master
+env:
+  global:
+    secure: PqpdnWYQoUFsiXZkv3so1ICj1xGD5G2aySSFV2penpt6HLNFMjXRToLrFC2EAq6HLM70IkN5aYS+hlBtayZBWqK0q8jCa2sUG7WeHMAiQ8G5n3Tj0KnA6fcDE0td/kxolnzzEvvId9k43aTT3jjd5sEpirgcxERBiDEWE7b3G/CLggVKDEMGYsUexTvA3boguF3p+ujYcKbo3NMwQaBeBrLGVl0JXwnyQXDQyUrCy7neHIDfxSwP1z3FDH1vy5JOPd9cm0e5R3cvOPeVvy0cjpdBVdYuNO6ZyfB0/Jvgx5gZlGhksKM5uF2YmVueqckXmSTxQzdGwi6Ch0PAu7r0rlE+Av9nPmxZ0v33hgb0gDuMqoKDfsGNPZhSyPXGLzxqQNU+H4zTaDGhcnvxL7zo+Pd0fo8+aKrG/GMNfeb1LTZyXfbGL8oSDF+51G126LLatEthgjfFwdFTOf3Vw0/fXKcuE998YYIzYdEcpbo7jwV2pUFyx3ybS/fuY4JhJRVaVFvKxlmgvOKyc8pZJ1mnS7kAf4KSy3TPxUFw7wShWCmuJqbLzPTkL/B9WLqZsTIvuYOCI/Icg0pQc3SVaBU/Wt/4ALVf1zTpLifjvM6J47ehNJq/PaUlHAKzALZsQHwaJiU2eopsvgBAPRndc177VsY5zTLYtXsZpSTKNnzMCM8=
