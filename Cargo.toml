@@ -9,5 +9,5 @@ repository = "https://github.com/mthjones/slackbot"
 homepage = "https://github.com/mthjones/slackbot"
 
 [dependencies]
-slack = "0.8.1"
+slack = "0.8.2"
 serde_json = "0.6.0"

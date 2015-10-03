@@ -5,7 +5,7 @@ mod event_handler;
 
 use std::collections::HashMap;
 
-use slack::{RtmClient,User};
+use slack::{RtmClient, User};
 use event_handler::SlackBotEventHandler;
 
 pub struct SlackBot {
@@ -54,18 +54,18 @@ impl<F> CommandHandler for F where F: FnMut(&mut Sender, &Vec<String>) {
 
 pub struct ChannelWriter<'a> {
     channel_id: String,
-    client: &'a mut RtmClient
+    client: &'a RtmClient
 }
 
 impl<'a> ChannelWriter<'a> {
-    pub fn new<S: Into<String>>(channel: S, client: &'a mut RtmClient) -> Self {
+    pub fn new<S: Into<String>>(channel: S, client: &'a RtmClient) -> Self {
         ChannelWriter {
             channel_id: channel.into(),
             client: client
         }
     }
 
-    pub fn write<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
-        self.client.post_message(&self.channel_id[..], &message.into()[..], None).map(|_| ())
+    pub fn message<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
+        self.client.send_message(&self.channel_id[..], &message.into()[..])
     }
 }
