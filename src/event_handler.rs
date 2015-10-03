@@ -66,7 +66,7 @@ impl<'a> EventHandler for SlackBotEventHandler<'a> {
             if let Some(handler) = self.handlers.get_mut(&cmd.command[..]) {
                 let writer = ChannelWriter::new(cmd.channel, cli);
                 let mut sender = Sender {
-                    channel: writer,
+                    channel_writer: writer,
                     user: user
                 };
                 handler.handle(&mut sender, &cmd.args);
