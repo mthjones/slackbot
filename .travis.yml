@@ -9,6 +9,7 @@ matrix:
 deploy:
   provider: script
   script: .travis/upload-docs.sh
+  skip_cleanup: true
   on:
     repo: mthjones/slackbot
     rust: stable
