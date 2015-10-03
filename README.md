@@ -3,7 +3,7 @@ A higher level interface for creating Slack bots in Rust.
 
 [![Crate][crates-badge]][crates-href] [![Build Status][travis-badge]][travis-href]
 
-## Documentation
+## [Documentation](http://mthjones.com/slackbot/slackbot/index.html)
 
 ## Usage
 Add this to your `Cargo.toml`:
