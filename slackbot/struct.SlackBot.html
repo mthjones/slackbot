@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `SlackBot` struct in crate `slackbot`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, SlackBot">
+
+    <title>slackbot::SlackBot - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>slackbot</a></p><script>window.sidebarCurrent = {name: 'SlackBot', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>slackbot</a>::<wbr><a class='struct' href=''>SlackBot</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-497' class='srclink' href='../src/slackbot/lib.rs.html#42-46' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct SlackBot {
+    // some fields omitted
+}</pre><div class='docblock'><p>The bot that handles commands and communication with Slack.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../slackbot/struct.SlackBot.html' title='slackbot::SlackBot'>SlackBot</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;A, B&gt;(name: A, token: B) -&gt; Self <span class='where'>where A: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;, B: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</span></code></h4>
+<div class='docblock'><p>Create a new bot to serve your team!</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>slackbot</span>::<span class='ident'>SlackBot</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>my_bot</span> <span class='op'>=</span> <span class='ident'>SlackBot</span>::<span class='ident'>new</span>(<span class='string'>&quot;bot&quot;</span>, <span class='string'>&quot;YOUR_API_TOKEN&quot;</span>);</pre>
+</div><h4 id='method.on' class='method'><code>fn <a href='#method.on' class='fnname'>on</a>&lt;S: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(&amp;mut self, command_name: S, handler: <a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../slackbot/trait.CommandHandler.html' title='slackbot::CommandHandler'>CommandHandler</a>&gt;)</code></h4>
+<div class='docblock'><p>Tell your bot what to do when it sees a command.</p>
+
+<p>The handler can be your own type that implements <code>CommandHandler</code>, but most simple cases
+can be covered by a simple closure.</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1>
+<p>With a simple closure:</p>
+<pre class='rust rust-example-rendered'>
+<span class='ident'>my_bot</span>.<span class='ident'>on</span>(<span class='string'>&quot;say-hello&quot;</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='op'>|</span><span class='ident'>sender</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Sender</span>, <span class='ident'>args</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span><span class='op'>|</span> {
+    <span class='ident'>sender</span>.<span class='ident'>respond_in_channel</span>(<span class='string'>&quot;Hello, world!&quot;</span>);
+}));</pre>
+
+<p>With an implemented CommandHandler:</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>struct</span> <span class='ident'>SayHelloCommandHandler</span>;
+
+<span class='kw'>impl</span> <span class='ident'>CommandHandler</span> <span class='kw'>for</span> <span class='ident'>SayHelloCommandHandler</span> {
+    <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>sender</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Sender</span>, <span class='ident'>args</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>) {
+        <span class='ident'>sender</span>.<span class='ident'>respond_in_channel</span>(<span class='string'>&quot;Hello, world!&quot;</span>);
+    }
+}
+
+<span class='ident'>my_bot</span>.<span class='ident'>on</span>(<span class='string'>&quot;say-hello&quot;</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>SayHelloCommandHandler</span>));</pre>
+</div><h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<div class='docblock'><p>Tell your bot to start pulling its weight!</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>match</span> <span class='ident'>my_bot</span>.<span class='ident'>run</span>() {
+    <span class='prelude-val'>Ok</span>(()) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Bot shut down successfully. Goodbye world!&quot;</span>),
+    <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Bot crashed. Error message: {}&quot;</span>, <span class='ident'>err</span>)
+};</pre>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div>
+            <div class="shortcuts">
+                <h1>Keyboard Shortcuts</h1>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h1>Search Tricks</h1>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "slackbot";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Sender","The sender of a command to the bot."]]});

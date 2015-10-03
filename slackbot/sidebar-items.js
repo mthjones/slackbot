@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Sender","The sender of a command to the bot."],["SlackBot","The bot that handles commands and communication with Slack."]],"trait":[["CommandHandler","A trait implemented by types that can handle commands."]]});
