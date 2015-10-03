@@ -1,5 +1,5 @@
 set -e
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
   cargo doc
   pip install --user ghp-import
   /home/travis/.local/bin/ghp-import -n target/doc
