@@ -10,5 +10,5 @@ homepage = "https://github.com/mthjones/slackbot"
 documentation = "https://mthjones.github.io/slackbot/slackbot"
 
 [dependencies]
-slack = "^0.8.2"
-serde_json = "^0.6.0"
+slack = "^0.16"
+serde_json = "^0.8.0"
