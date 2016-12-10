@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use slack::{EventHandler,RtmClient};
+use slack::{Error, Event, EventHandler, RtmClient};
 use serde_json::{self, Value};
 
 use super::CommandHandler;
@@ -61,7 +61,7 @@ impl<'a> SlackBotEventHandler<'a> {
 }
 
 impl<'a> EventHandler for SlackBotEventHandler<'a> {
-    fn on_receive(&mut self, cli: &mut RtmClient, json_str: &str) {
+    fn on_event(&mut self, cli: &mut RtmClient, _: Result<Event, Error>, json_str: &str) {
         if let Some(cmd) = Self::parse_json_to_command(&self.bot_name[..], json_str) {
             let user = cli.get_users().iter().find(|u| u.id == cmd.user_id).unwrap().clone();
             if let Some(handler) = self.handlers.get_mut(&cmd.command[..]) {

@@ -30,7 +30,7 @@ extern crate slack;
 extern crate serde_json;
 
 use std::collections::HashMap;
-use slack::RtmClient;
+use slack::{Error, RtmClient};
 
 mod event_handler;
 mod sender;
@@ -113,7 +113,7 @@ impl SlackBot {
     ///     Err(err) => println!("Bot crashed. Error message: {}", err)
     /// };
     /// ```
-    pub fn run(&mut self) -> Result<(), String> {
+    pub fn run(&mut self) -> Result<(), Error> {
         let mut client = RtmClient::new(&self.token[..]);
         let mut handler = SlackBotEventHandler::new(&self.name[..], &mut self.handlers);
 

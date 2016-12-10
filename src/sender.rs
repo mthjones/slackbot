@@ -1,4 +1,4 @@
-use slack::{RtmClient, User};
+use slack::{Error, RtmClient, User};
 
 /// The sender of a command to the bot.
 pub struct Sender<'a> {
@@ -30,7 +30,7 @@ impl<'a> Sender<'a> {
     /// sender.respond_in_channel("Hello, world!");
     /// # }));
     /// ```
-    pub fn respond_in_channel<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
+    pub fn respond_in_channel<S: Into<String>>(&mut self, message: S) -> Result<isize, Error> {
         self.channel_writer.write(message)
     }
 }
@@ -48,7 +48,7 @@ impl<'a> ChannelWriter<'a> {
         }
     }
 
-    fn write<S: Into<String>>(&mut self, message: S) -> Result<(), String> {
+    fn write<S: Into<String>>(&mut self, message: S) -> Result<isize, Error> {
         self.client.send_message(&self.channel_id[..], &message.into()[..])
     }
 }
