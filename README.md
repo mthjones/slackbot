@@ -42,6 +42,8 @@ fn main() {
 }
 ```
 
+You can trigger it by writing `!bot echo [hi]` in any channel.
+
 ## License
 `slackbot` is distributed under the [MIT License](./LICENSE).
 
